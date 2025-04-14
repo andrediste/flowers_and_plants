@@ -1,0 +1,75 @@
+[project]
+name = "flowers-and-plants"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "sqlalchemy (>=2.0.40,<3.0.0)",
+    "alembic (>=1.15.2,<2.0.0)",
+    "streamlit (>=1.44.1,<2.0.0)",
+    "google-cloud-storage (>=3.1.0,<4.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "pre-commit (>=4.2.0,<5.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.alembic]
+script_location = "migrations"
+sqlalchemy.url = "sqlite:///flowers_and_plants.db"
+
+
+[tool.ruff]
+line-length = 99
+target-version = "py311"
+exclude = [
+    "tests/test_cashflow_model/test_cli/test_pylauncher/syntax_error_task.py",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "PL",  # pylint
+    "S",   # flake8-bandit
+    "I",   # isort
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+]
+ignore = [
+    "PLR0911", # too many return statements
+    "PLR0912", # too many branches
+    "PLR0913", # too many arguments
+    "PLR0915", # too many statements
+    "PLR2004", # magic value in comparison
+    "E501",    # line too long
+    "E741",    # ambiguous variable name
+]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+lines-between-types = 1
+
+
+[tool.ruff.lint.per-file-ignores]
+"**/test**.py" = [
+    "S101",    # use of `assert`
+    "PLR0915", # too many statements
+    "PLR2004", # magic value in comparison
+    "E501",    # line too long
+    "E712",    # avoic comparison with True
+    "E741",    # ambiguous variable name
+    "SIM103",  # needless bool
+]
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.5"
+pre-commit = "^4.2.0"
