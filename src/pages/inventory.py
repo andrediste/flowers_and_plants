@@ -1,5 +1,4 @@
 import streamlit as st
-
 from sqlalchemy.orm import Session
 
 from db.orders.models import Item
@@ -12,9 +11,7 @@ def show_item_form(db: Session, item: Item = None):
     type_ = st.text_input("Type", value=item.type if item else "")
     size = st.number_input("Size", value=item.size if item and item.size else 0.0)
     price = st.number_input("Price", value=item.price if item and item.price else 0.0)
-    available = st.text_input(
-        "Available (comma separated)", value=item.available if item else ""
-    )
+    available = st.text_input("Available (comma separated)", value=item.available if item else "")
 
     if st.button("Save", key="save_item"):
         if item:
@@ -24,9 +21,7 @@ def show_item_form(db: Session, item: Item = None):
             item.price = price
             item.available = available
         else:
-            new_item = Item(
-                name=name, type=type_, size=size, price=price, available=available
-            )
+            new_item = Item(name=name, type=type_, size=size, price=price, available=available)
             db.add(new_item)
         db.commit()
         st.success("Item saved!")
@@ -34,7 +29,6 @@ def show_item_form(db: Session, item: Item = None):
 
 
 def manage_inventory():
-
     st.title("Gestione Inventario")
 
     db: Session = get_session()

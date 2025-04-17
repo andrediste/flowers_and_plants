@@ -27,3 +27,14 @@ Gestione automatica di ordini per un negozio di fiori, integrata con OCR, Stream
 Due opzioni disponibili:
 - Locale (`app/data/flower_shop_test.sqlite`)
 - Produzione su Google Drive (`/mount/drive/flower_shop_prod.sqlite`)
+
+
+docker run --rm -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=postgres postgres:15
+docker exec postgres psql -h localhost -U postgres --command "create database flower_and_plants;"
+alembic upgrade head
+
+docker run --rm -d -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=postgres postgres:15
+
+docker stop postgres # only works if the container was started with `docker run --rm`
+
+docker exec postgres psql -h localhost -U postgres --command "drop database flower_and_plants;" 

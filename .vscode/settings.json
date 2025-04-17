@@ -1,0 +1,10 @@
+{
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests", 
+        "--no-cov"
+    ],
+    "python.envFile": "${workspaceFolder}/.env",
+}

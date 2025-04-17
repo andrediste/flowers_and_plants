@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"  # Mappa la porta 8501 del container alla porta 8501 locale
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:password@db:5432/flowers_and_plants
+    depends_on:
+      - db
+    volumes:
+      - .:/app  # Monta il codice sorgente per lo sviluppo
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    ports:
+      - "5432:5432"  # Mappa la porta 5432 del container alla porta 5432 locale
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flowers_and_plants
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  alembic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:password@db:5432/flowers_and_plants
+    command: alembic upgrade head
+
+volumes:
+  postgres_data:

@@ -1,7 +1,6 @@
 from sqlalchemy import MetaData, Text
 from sqlalchemy.orm import DeclarativeBase
 
-
 metadata = MetaData()
 
 

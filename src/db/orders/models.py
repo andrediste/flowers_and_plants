@@ -4,8 +4,8 @@ from decimal import Decimal
 from sqlalchemy import Column, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db.metadata import Base
-from db.models.orders.base import SCHEMA
+from src.db.metadata import Base
+from src.db.orders.base import SCHEMA
 
 
 class Item(Base):
@@ -47,11 +47,7 @@ class OrderItem(Base):
     checked: Mapped[bool] = mapped_column(default=False)
     prepared_quantity: Mapped[int] = mapped_column(default=0)
     note: Mapped[str]
-    order_id: Mapped[int] = mapped_column(
-        ForeignKey(f"{SCHEMA}.orders.id"), primary_key=True
-    )
-    item_id: Mapped[int] = mapped_column(
-        ForeignKey(f"{SCHEMA}.items.id"), primary_key=True
-    )
+    order_id: Mapped[int] = mapped_column(ForeignKey(f"{SCHEMA}.orders.id"), primary_key=True)
+    item_id: Mapped[int] = mapped_column(ForeignKey(f"{SCHEMA}.items.id"), primary_key=True)
     order: Mapped["Order"] = relationship(back_populates="items")
     item: Mapped["Item"] = relationship()

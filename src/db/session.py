@@ -1,16 +1,14 @@
-import streamlit as st
+import os
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from db.metadata import Base
+from src.db.metadata import Base
 
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/flower_and_plants")  # Default a SQLite memory per i test
 
-DATABASE_PATH = st.secrets["database"]["path"]
-
-engine = create_engine(DATABASE_PATH, echo=False)
-SessionLocal = sessionmaker(bind=engine)
-
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def init_db():
     Base.metadata.create_all(bind=engine)

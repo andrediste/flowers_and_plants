@@ -1,5 +1,5 @@
 def init_metadata():
     from db.metadata import Base
-    from db.models.orders import orders
+    from db.orders import models
 
     return Base.metadata

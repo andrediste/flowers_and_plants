@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import streamlit as st
-
 from sqlalchemy.orm import Session
 
 from db.orders.models import Item, Order, OrderItem
@@ -61,9 +60,7 @@ def ordini_page():
         st.header("Lista ordini")
         orders = db.query(Order).all()
         for o in orders:
-            with st.expander(
-                f"Ordine #{o.id} - {o.shop} - {o.date.strftime('%d/%m/%Y')}"
-            ):
+            with st.expander(f"Ordine #{o.id} - {o.shop} - {o.date.strftime('%d/%m/%Y')}"):
                 st.text(o.note)
                 st.text(f"Gestito: {'✔️' if o.handled else '❌'}")
                 for item in o.items:
